@@ -1,5 +1,7 @@
 list.of.packages <- c(
-  'mvtnorm'
+  'mvtnorm',
+  'mvnfast',
+  'cubature'
 );
 
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[, 'Package'])]
