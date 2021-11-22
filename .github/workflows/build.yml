@@ -23,7 +23,12 @@ jobs:
       - name: Extract repository name
         shell: bash
         run: echo "##[set-output name=repository;]$(echo ${GITHUB_REPOSITORY#dimvic/docker-})"
-        id: extract_repository
+        id: x_repository
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: x_branch
 
       - name: Build and push
         id: docker_build
@@ -32,7 +37,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ steps.extract_repository.outputs.repository }}:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ steps.x_repository.outputs.repository }}:${{ steps.x_branch.outputs.branch == 'main' && 'latest' || steps.x_branch.outputs.branch }}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
