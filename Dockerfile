@@ -1,4 +1,4 @@
-FROM r-base:4.1.2
+FROM --platform=linux/arm64/v8 r-base:4.1.2
 
 # en_GB
 RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
